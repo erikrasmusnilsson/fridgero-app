@@ -1,18 +1,20 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import { LIGHT_GRAY, MEDIUM_GRAY } from '../../../constants';
 
 import ProgressBar from '../../atoms/progress-bar';
 
 const FridgeItem = ({ 
-    title, 
-    capacity,
+    item,
     onPress
 }) => {
+    const { title, capacity } = item;
     return (
-        <TouchableOpacity style={ styles.fridgeItem } onPress={ onPress }>
+        <TouchableOpacity style={ styles.fridgeItem } onPress={ () => onPress(item) }>
             <Text style={ styles.title }>{ title }</Text>
-            <ProgressBar progress={ capacity } />
+            <View style={ styles.progressBarWrapper }>
+                <ProgressBar progress={ capacity } />
+            </View>
         </TouchableOpacity>
     )
 }
@@ -32,6 +34,9 @@ const styles = StyleSheet.create({
         flexBasis: '50%',
         color: MEDIUM_GRAY,
         marginRight: 12
+    },
+    progressBarWrapper: {
+        flex: 1
     }
 });
 

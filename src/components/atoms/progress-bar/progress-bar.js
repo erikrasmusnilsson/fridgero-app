@@ -12,8 +12,8 @@ const ProgressBar = ({ progress }) => {
 
 const styles = StyleSheet.create({
     progressBar: {
-        flex: 1,
         backgroundColor: MEDIUM_LIGHT_GRAY,
+        maxHeight: 8,
         height: 8,
         position: 'relative',
         borderRadius: 50,
