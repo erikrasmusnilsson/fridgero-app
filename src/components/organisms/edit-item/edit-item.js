@@ -4,7 +4,7 @@ import { MEDIUM_GRAY, LIGHT_GRAY } from '../../../constants';
 
 import ProgressBar from '../../atoms/progress-bar';
 import SecondaryButton from '../../atoms/buttons/secondary';
-import DangerButton from '../../atoms/buttons/danger';
+import TertiaryButton from '../../atoms/buttons/tertiary';
 import ExpiryDate from '../../molecules/expiry-date';
 
 const EditItem = ({
@@ -30,8 +30,11 @@ const EditItem = ({
                 />
             </View>
             <View style={ styles.buttonWrapper }>
-                <DangerButton title="Delete" onPress={ () => onDeleteItem(id) } />
-                <SecondaryButton title="Save" style={{ marginLeft: 12 }} />
+                <SecondaryButton 
+                    title="Delete" 
+                    style={{ marginLeft: 12 }} 
+                    onPress={ () => onDeleteItem(id) } 
+                />
             </View>
         </View>
     )
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
         padding: 24,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     header: {
         flex: 1
@@ -61,7 +64,7 @@ const styles = StyleSheet.create({
     },
     buttonWrapper: {
         flexDirection: "row",
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-start'
     }
 });
 

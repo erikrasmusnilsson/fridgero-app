@@ -24,7 +24,7 @@ const TextInput = ({
 const styles = ReactNative.StyleSheet.create({
     textInput: {
         paddingHorizontal: 24,
-        paddingVertical: 16,
+        paddingVertical: 12,
         borderRadius: 50,
         backgroundColor: LIGHT_GRAY,
         color: MEDIUM_GRAY,

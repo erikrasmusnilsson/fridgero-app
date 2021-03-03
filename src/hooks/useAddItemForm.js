@@ -4,7 +4,7 @@ import { useReducer } from 'react';
 const UPDATE_ADD_ITEM_NAME = "update_name";
 const UPDATE_ADD_ITEM_CAPACITY = "update_capacity";
 const UPDATE_ADD_ITEM_EXPIRY_DATE = "update_expiry_date";
-
+const RESET_ADD_ITEM = "reset";
 
 const initial = {
     name: "",
@@ -20,13 +20,21 @@ const reducer = (state, action) => {
             return {...state, expiryDate: action.payload};
         case UPDATE_ADD_ITEM_NAME:
             return {...state, name: action.payload};
+        case RESET_ADD_ITEM:
+            return initial;
         default: 
             return state;
     }
 }
 
 const useAddItemForm = () => {
-    return useReducer(reducer, initial);
+    const [state, dispatch] = useReducer(reducer, initial);
+
+    const reset = () => {
+        dispatch({ type: RESET_ADD_ITEM });
+    }
+
+    return [state, reset, dispatch];
 }
 
 export {

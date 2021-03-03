@@ -20,10 +20,14 @@ import AddItem from '../../components/organisms/add-item';
 
 const Panel = ({ navigation }) => {
     const { items, deleteItem, addItem, updateItem } = useContext(ItemContext);
+    
+    // Edit item
     const [selectedItem, setSelectedItem] = useState(null);
     const [isEditingExpiryDate, setIsEditingExpiryDate] = useState(false);
+
+    // Add item
     const [isAddingItem, setIsAddingItem] = useState(false);
-    const [addItemForm, dispatchAddItemForm] = useAddItemForm();
+    const [addItemForm, resetAddItemForm, dispatchAddItemForm] = useAddItemForm();
 
     const onPressFridgeItem = item => {
         setSelectedItem(item);
@@ -46,6 +50,19 @@ const Panel = ({ navigation }) => {
         const difference = item.expiryDate.getTime() - new Date().getTime();
         const days = difference / (1000 * 3600 * 24);
         return days < 3;
+    }
+
+    const onSaveItem = () => {
+        setIsAddingItem(false);
+        const id = Math.floor(Math.random() * 9999);
+        const item = {
+            id,
+            title: addItemForm.name,
+            capacity: addItemForm.capacity,
+            expiryDate: addItemForm.expiryDate
+        }
+        addItem(item);
+        resetAddItemForm();
     }
 
     return (
@@ -86,11 +103,11 @@ const Panel = ({ navigation }) => {
                         <EditItem 
                             item={ selectedItem }
                             onRequestEditExpiryDate={ () => setIsEditingExpiryDate(true) }
-                            isEditingExpiryDate={ isEditingExpiryDate }
+                            isEditingExpiryDate={ isEditingExpiryDate && !isAddingItem }
                             onChangeExpiryDate={ onChangeExpiryDate }
                             onDeleteItem={ onDeleteItem }
                         />
-                    ) : null }
+                    ) : <></> }
                 </Modal>
                 <Modal 
                     style={ styles.modal } 
@@ -106,7 +123,13 @@ const Panel = ({ navigation }) => {
                         capacity={ addItemForm.capacity }
                         setCapacity={ payload => dispatchAddItemForm({ type: UPDATE_ADD_ITEM_CAPACITY, payload }) }
                         expiryDate={ addItemForm.expiryDate }
-                        setExpiryDate={ payload => dispatchAddItemForm({ type: UPDATE_ADD_ITEM_EXPIRY_DATE, payload }) }
+                        setExpiryDate={ payload => {
+                            setIsEditingExpiryDate(false);
+                            dispatchAddItemForm({ type: UPDATE_ADD_ITEM_EXPIRY_DATE, payload });
+                        } }
+                        isEditingExpiryDate={ isEditingExpiryDate && isAddingItem }
+                        onRequestEditExpiryDate={ () => setIsEditingExpiryDate(true) }
+                        onSave={ onSaveItem }
                     />
                 </Modal>
             </View>
